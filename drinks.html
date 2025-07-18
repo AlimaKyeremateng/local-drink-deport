@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentic Ghanaian Drinks | Taste of Ghana</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reuse your color scheme */
+        :root {
+            --ghana-red: #CF0A10;
+            --ghana-gold: #CFB53B;
+            --ghana-green: #006B3F;
+            --calabash-dark: #5C4033;
+            --calabash-light: #F5DEB3;
+            --cream: #FFF8E7;
+            --text-dark: #2D2D2D;
+            --text-light: #FFFFFF;
+        }
+
+        /* Base Styles */
+        body {
+            background-color: var(--cream);
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation - Same as other pages */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--text-light);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--ghana-red), var(--ghana-gold));
+            -webkit-background-cli: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            font-weight: 600;
+            color: var(--text-dark);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--ghana-red);
+            transition: width 0.3s;
+        }
+
+        .nav-links li a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links li a.active {
+            color: var(--ghana-red);
+        }
+
+        /* Drinks Hero Section */
+        .drinks-hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('assert/asana.jpg') center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .drinks-hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .drinks-hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Drink Categories */
+        .drink-categories {
+            padding: 4rem 0;
+            background-color: var(--text-light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--ghana-green);
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--ghana-gold);
+            margin: 15px auto;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .category-card {
+            background: var(--cream);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .category-header {
+            background: var(--ghana-green);
+            color: var(--text-light);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .category-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .drinks-list {
+            padding: 1.5rem;
+        }
+
+        .drink-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            align-items: center;
+            border-bottom: 1px dashed var(--calabash-light);
+            padding-bottom: 1rem;
+        }
+
+        .drink-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .drink-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1.5rem;
+            border: 3px solid var(--ghana-gold);
+            flex-shrink: 0;
+        }
+
+        .drink-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .drink-info h3 {
+            color: var(--ghana-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .drink-info p {
+            color: var(--calabash-dark);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .view-recipe {
+            color: var(--ghana-green);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .view-recipe i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+
+        .view-recipe:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Cultural Significance Section */
+        .cultural-section {
+            padding: 5rem 0;
+            background: linear-gradient(to right, var(--calabash-light), var(--cream));
+        }
+
+        .cultural-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .cultural-text {
+            flex: 1;
+        }
+
+        .cultural-text h2 {
+            color: var(--calabash-dark);
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+
+        .cultural-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 5px solid var(--text-light);
+        }
+
+        .cultural-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Footer - Same as other pages */
+        footer {
+            background-color: var(--calabash-dark);
+            color: var(--text-light);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            color: var(--ghana-gold);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--ghana-gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            color: var(--text-light);
+        }
+
+        .social-links a:hover {
+            background: var(--ghana-gold);
+            transform: translateY(-3px);
+            color: var(--calabash-dark);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+            color: var(--calabash-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 90px);
+                background: var(--text-light);
+                flex-direction: column;
+                align-items: center;
+                justify-content: start;
+                gap: 2rem;
+                padding-top: 3rem;
+                transition: left 0.5s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .drinks-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cultural-content {
+                flex-direction: column;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Ghana.svg" alt="Ghana Flag" width="40">
+            <span class="logo-text">TasteOfGhana</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="drinks.html" class="active">Our Drinks</a></li>
+            <li><a href="recipes.html">Recipes</a></li>
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <div class="search-box">
+                <input type="text" placeholder="Search drinks...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </nav>
+
+    <!-- Drinks Hero Section -->
+    <section class="drinks-hero">
+        <div class="container drinks-hero-content">
+            <h1>Authentic Ghanaian Beverages</h1>
+            <p>Discover the rich flavors and cultural heritage of Ghana through our traditional drinks, each with a story to tell</p>
+        </div>
+    </section>
+
+    <!-- Drink Categories -->
+    <section class="drink-categories">
+        <div class="container">
+            <h2 class="section-title">Our Traditional Drinks</h2>
+            <div class="category-grid">
+                <!-- Fermented Drinks -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <h2>Fermented Delights</h2>
+                    </div>
+                    <div class="drinks-list">
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="assert/asana.jpg" alt="Asaana">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Asaana</h3>
+                                <p>Fermented corn drink with sweet-sour flavor</p>
+                                <a href="recipes.html#asana" class="view-recipe">View Recipe <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Palm_wine.jpg/1200px-Palm_wine.jpg" alt="Palm Wine">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Palm Wine</h3>
+                                <p>Naturally fermented palm sap with sweet-tart taste</p>
+                                <a href="recipes.html#palm-wine" class="view-recipe">View Recipe <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="assert/lomogin.jpg" alt="Lamogin">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Lamogin</h3>
+                                <p>Millet-based fermented beverage</p>
+                                <a href="recipes.html" class="view-recipe">View Recipe <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Herbal & Fruit Drinks -->
+                <div class="category-card">
+                    <div class="category-header" style="background-color: var(--ghana-red);">
+                        <h2>Herbal & Fruit Infusions</h2>
+                    </div>
+                    <div class="drinks-list">
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="assert/s1.jpg" alt="Sobolo">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Sobolo</h3>
+                                <p>Hibiscus tea with ginger and pineapple</p>
+                                <a href="recipes.html" class="view-recipe">View Recipe <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="https://i.pinimg.com/originals/9a/9b/9a/9a9b9a9a9a9a9a9a9a9a9a9a9a9a9a.jpg" alt="Burkina">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Burkina</h3>
+                                <p>Spiced sorghum drink with ginger and cloves</p>
+                                <a href="recipes.html#burkina" class="view-recipe">View Recipe <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="assert/samia.jpg" alt="Samia">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Samia</h3>
+                                <p>Tigernut milk drink with coconut</p>
+                                <a href="recipes.html" class="view-recipe">View Recipe <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modern Favorites -->
+                <div class="category-card">
+                    <div class="category-header" style="background-color: var(--ghana-gold); color: var(--text-dark);">
+                        <h2>Modern Favorites</h2>
+                    </div>
+                    <div class="drinks-list">
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="https://i.pinimg.com/originals/9a/9b/9a/9a9b9a9a9a9a9a9a9a9a9a9a9a9a9a.jpg" alt="Alomo Bitters">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Alomo Bitters</h3>
+                                <p>Herbal alcoholic beverage with medicinal roots</p>
+                                <a href="#" class="view-recipe">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="https://i.pinimg.com/originals/9a/9b/9a/9a9b9a9a9a9a9a9a9a9a9a9a9a9a9a.jpg" alt="Malta Guinness">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Malta Guinness</h3>
+                                <p>Non-alcoholic malt beverage with rich flavor</p>
+                                <a href="#" class="view-recipe">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="drink-item">
+                            <div class="drink-img">
+                                <img src="s3" alt="Pito">
+                            </div>
+                            <div class="drink-info">
+                                <h3>Pito</h3>
+                                <p>Traditional fermented millet or sorghum beer</p>
+                                <a href="#" class="view-recipe">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Significance Section -->
+    <section class="cultural-section">
+        <div class="container cultural-content">
+            <div class="cultural-text">
+                <h2>The Soul of Ghana in Every Sip</h2>
+                <p>Ghanaian drinks are more than just refreshments - they're woven into our cultural fabric. Each beverage tells a story of our traditions, ceremonies, and daily life.</p>
+                <p>From the Sobolo served at naming ceremonies to the Palm Wine shared during festivals, these drinks carry generations of wisdom and community spirit.</p>
+                <p>Our ancestors perfected these recipes using local ingredients, and we honor that legacy by preserving these authentic flavors while adapting them for modern enjoyment.</p>
+            </div>
+            <div class="cultural-image">
+                <img src="assert/lomogin.jpg" alt="Ghanaian drink preparation">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Taste of Ghana</h3>
+                    <p>Celebrating Ghana's rich beverage heritage through authentic drinks and traditions</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="drinks.html">Our Drinks</a></li>
+                        <li><a href="recipes.html">Recipes</a></li>
+                        <li><a href="about.html">Our Story</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Accra, Ghana</li>
+                        <li><i class="fas fa-phone"></i> +233 123 456 789</li>
+                        <li><i class="fas fa-envelope"></i> drinks@tasteofghana.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Taste of Ghana. Preserving tradition, one drink at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html

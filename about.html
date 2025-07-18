@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | Taste of Ghana</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Ghanaian Color Palette */
+        :root {
+            --ghana-red: #CF0A10;
+            --ghana-gold: #CFB53B;
+            --ghana-green: #006B3F;
+            --calabash-dark: #5C4033;
+            --calabash-light: #F5DEB3;
+            --cream: #FFF8E7;
+            --text-dark: #2D2D2D;
+            --text-light: #FFFFFF;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--text-light);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--ghana-red), var(--ghana-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            font-weight: 600;
+            color: var(--text-dark);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--ghana-red);
+            transition: width 0.3s;
+        }
+
+        .nav-links li a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links li a.active {
+            color: var(--ghana-red);
+        }
+
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--text-light);
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--text-dark);
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--calabash-light);
+            color: var(--ghana-red);
+            padding-left: 20px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(241, 241, 241, 0.8);
+            border-radius: 30px;
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--ghana-gold);
+            transition: all 0.3s;
+        }
+
+        .search-box:hover {
+            box-shadow: 0 0 10px rgba(207, 181, 59, 0.3);
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 150px;
+            transition: width 0.3s;
+        }
+
+        .search-box input:focus {
+            width: 200px;
+        }
+
+        .search-box button {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: var(--calabash-dark);
+        }
+
+        .cart-icon {
+            position: relative;
+            color: var(--calabash-dark);
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--ghana-red);
+            color: var(--text-light);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 3px;
+            background: var(--calabash-dark);
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        /* About Page Specific Styles */
+        .about-hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1545566238-3f9a94a48b9b') center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .about-hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .about-content {
+            padding: 5rem 0;
+        }
+
+        .history-section, .mission-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            color: var(--ghana-green);
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: var(--ghana-gold);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            background: var(--text-light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-photo {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .team-member:hover .member-photo img {
+            transform: scale(1.1);
+        }
+
+        .member-info {
+            padding: 1.5rem;
+        }
+
+        .member-info h3 {
+            color: var(--ghana-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .member-info p {
+            color: var(--calabash-dark);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: var(--calabash-light);
+            border-radius: 50%;
+            color: var(--ghana-red);
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--ghana-red);
+            color: var(--text-light);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 90px);
+                background: var(--text-light);
+                flex-direction: column;
+                align-items: center;
+                justify-content: start;
+                gap: 2rem;
+                padding-top: 3rem;
+                transition: left 0.5s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                background: transparent;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                max-height: 500px;
+            }
+            
+            .dropdown > a::after {
+                content: '+';
+                margin-left: 5px;
+            }
+            
+            .dropdown.active > a::after {
+                content: '-';
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .line:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .hamburger.active .line:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .line:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+            
+            .search-box {
+                display: none;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Ghana.svg" alt="Ghana Flag" width="40">
+            <span class="logo-text">TasteOfGhana</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            
+            <li class="dropdown">
+                <a href="drinks.html">Our Drinks <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="drinks.html#fermented">Fermented Drinks</a>
+                    <a href="drinks.html#herbal">Herbal & Fruit</a>
+                    <a href="drinks.html#modern">Modern Favorites</a>
+                </div>
+            </li>
+            
+            <li class="dropdown">
+                <a href="recipes.html">Recipes <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="recipes.html#sobolo">Sobolo</a>
+                    <a href="recipes.html#asaana">Asaana</a>
+                    <a href="recipes.html#lamogin">Lamogin</a>
+                    <a href="recipes.html#burkina">Burkina</a>
+                    <a href="recipes.html#samia">Samia</a>
+                </div>
+            </li>
+            
+            <li><a href="about.html" class="active">Our Story</a></li>
+            
+            <li><a href="shop.html">Shop</a></li>
+            
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="search-box">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </a>
+        </div>
+
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </nav>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="container about-hero-content">
+            <h1>Our Ghanaian Heritage</h1>
+            <p>Preserving tradition through authentic beverages since 2010</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <div class="container about-content">
+        <section class="history-section">
+            <h2 class="section-title">Our Journey</h2>
+            <p>Founded in Accra by three childhood friends, Taste of Ghana began as a small street stall sharing homemade Sobolo with our community. What started as a passion project quickly grew into a movement to preserve Ghana's rich drink heritage.</p>
+            <p>Over the past decade, we've traveled to every region of Ghana, learning traditional recipes from elders and mastering techniques passed down through generations. Each drink in our collection tells a story of our ancestors and the land we cherish.</p>
+        </section>
+
+        <section class="mission-section">
+            <h2 class="section-title">Our Mission</h2>
+            <p>We exist to:</p>
+            <ul style="margin: 1rem 0 1rem 2rem;">
+                <li>Preserve authentic Ghanaian drink recipes</li>
+                <li>Support local farmers and producers</li>
+                <li>Educate new generations about our culinary heritage</li>
+                <li>Innovate while respecting tradition</li>
+            </ul>
+            <p>Every bottle we sell helps fund our community programs teaching traditional brewing methods to young Ghanaians.</p>
+        </section>
+
+        <section class="team-section">
+            <h2 class="section-title">Meet the Brewmasters</h2>
+            <p>Our team of traditional beverage experts brings decades of combined experience:</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956" alt="Nana Kwame">
+                    </div>
+                    <div class="member-info">
+                        <h3>Nana Kwame</h3>
+                        <p>Head Brewmaster</p>
+                        <p>Specializes in fermented drinks like Asaana and Palm Wine</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2" alt="Ama Serwaa">
+                    </div>
+                    <div class="member-info">
+                        <h3>Ama Serwaa</h3>
+                        <p>Herbal Specialist</p>
+                        <p>Expert in medicinal infusions and spice blends</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a" alt="Kofi Mensah">
+                    </div>
+                    <div class="member-info">
+                        <h3>Kofi Mensah</h3>
+                        <p>Modern Innovations</p>
+                        <p>Bridges tradition with contemporary techniques</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Taste of Ghana</h3>
+                    <p>Celebrating Ghana's rich beverage heritage through authentic drinks and traditions</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="drinks.html">Our Drinks</a></li>
+                        <li><a href="recipes.html">Recipes</a></li>
+                        <li><a href="about.html">Our Story</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Accra, Ghana</li>
+                        <li><i class="fas fa-phone"></i> +233 123 456 789</li>
+                        <li><i class="fas fa-envelope"></i> info@tasteofghana.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Taste of Ghana. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown > a').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    document.querySelectorAll('.dropdown').forEach(otherDropdown => {
+                        if (otherDropdown !== this.parentElement) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Close dropdowns when clicking elsewhere
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown') && window.innerWidth <= 768) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
